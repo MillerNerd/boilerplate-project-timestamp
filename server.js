@@ -24,11 +24,13 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:year-:month-:day", (req, res, next) => {
-  res.json({echo: req.params.year})
+  let formatedDate = new Date(req.params.year, (req.params.month - 1), req.params.day)
+  res.json({echo: formatedDate})
 })
 
 app.get("/api/:inputDate", (req, res, next) => {
-  res.json({echo: req.params.inputDate})
+  let formatedDate = new Date(Number(req.params.inputDate))
+  res.json({echo: formatedDate})
 })
 
 // listen for requests :)
