@@ -23,8 +23,8 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date", (req, res, next) => {
-  res.json({echo: req.params.date})
+app.get("/api/:inputDate", (req, res, next) => {
+  res.json({echo: req.params.inputDate})
 })
 
 // listen for requests :)
