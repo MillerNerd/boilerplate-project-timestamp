@@ -23,12 +23,18 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:inputDate", (req, res, next) => {
+app.get("/api/:inputDate?", (req, res, next) => {
   // unix epoch time needs to be int, not string
   if( !isNaN(req.params.inputDate) ) {
     req.params.inputDate = Number(req.params.inputDate)
   }
-  let formatedDate = new Date(req.params.inputDate)
+  // check if parameter is empy
+  if (req.params.inputDate) {
+    var formatedDate = new Date(req.params.inputDate)
+  } else {
+    var formatedDate = new Date()
+  }
+  // check date is valid
   if (formatedDate.toString() === "Invalid Date") {
     res.json( { error: "Invalid Date" } )
   } else {
