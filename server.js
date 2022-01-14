@@ -23,6 +23,10 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/:year-:month-:day", (req, res, next) => {
+  res.json({echo: req.params.year})
+})
+
 app.get("/api/:inputDate", (req, res, next) => {
   res.json({echo: req.params.inputDate})
 })
