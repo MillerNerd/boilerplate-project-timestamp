@@ -23,13 +23,8 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:year-:month-:day", (req, res, next) => {
-  let formatedDate = new Date(Date.UTC(req.params.year, (req.params.month - 1), req.params.day))
-  res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
-})
-
 app.get("/api/:inputDate", (req, res, next) => {
-  let formatedDate = new Date(Number(req.params.inputDate))
+  let formatedDate = new Date(Date.parse(req.params.inputDate))
   res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
 })
 
