@@ -24,8 +24,16 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:inputDate", (req, res, next) => {
+  // unix epoch time needs to be int, not string
+  if( !isNaN(req.params.inputDate) ) {
+    req.params.inputDate = Number(req.params.inputDate)
+  }
   let formatedDate = new Date(req.params.inputDate)
-  res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  if (formatedDate.toString() === "Invalid Date") {
+    res.json( { error: "Invalid Date" } )
+  } else {
+    res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  }
 })
 
 // listen for requests :)
