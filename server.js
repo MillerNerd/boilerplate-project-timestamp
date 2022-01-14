@@ -24,13 +24,22 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:year-:month-:day", (req, res, next) => {
-  let formatedDate = new Date(Date.UTC(req.params.year, (req.params.month - 1), req.params.day))
-  res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  try {
+    let formatedDate = new Date(Date.UTC(req.params.year, (req.params.month - 1), req.params.day))
+    res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  }
+  catch (err) {
+    res.json({error: "Invalid Date"})
+  }
 })
 
 app.get("/api/:inputDate", (req, res, next) => {
-  let formatedDate = new Date(Number(req.params.inputDate))
-  res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  try {
+    let formatedDate = new Date(Number(req.params.inputDate))
+    res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+  } catch (err) {
+    res.json({error: "Invalid Date"})
+  }
 })
 
 // listen for requests :)
