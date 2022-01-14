@@ -23,22 +23,22 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:year-:month-:day", (req, res, next) => {
-  try {
-    let formatedDate = new Date(Date.UTC(req.params.year, (req.params.month - 1), req.params.day))
-    res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
+app.get("/api/:inputDate?", (req, res, next) => {
+  // unix epoch time needs to be int, not string
+  if( !isNaN(req.params.inputDate) ) {
+    req.params.inputDate = Number(req.params.inputDate)
   }
-  catch (err) {
-    res.json({error: "Invalid Date"})
+  // check if parameter is empy
+  if (req.params.inputDate) {
+    var formatedDate = new Date(req.params.inputDate)
+  } else {
+    var formatedDate = new Date()
   }
-})
-
-app.get("/api/:inputDate", (req, res, next) => {
-  try {
-    let formatedDate = new Date(Number(req.params.inputDate))
+  // check date is valid
+  if (formatedDate.toString() === "Invalid Date") {
+    res.json( { error: "Invalid Date" } )
+  } else {
     res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
-  } catch (err) {
-    res.json({error: "Invalid Date"})
   }
 })
 
