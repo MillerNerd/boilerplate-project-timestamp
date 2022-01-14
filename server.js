@@ -24,7 +24,7 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:inputDate", (req, res, next) => {
-  let formatedDate = new Date(Date.parse(req.params.inputDate))
+  let formatedDate = new Date(req.params.inputDate)
   res.json({unix: formatedDate.getTime(), utc: formatedDate.toUTCString()})
 })
 
